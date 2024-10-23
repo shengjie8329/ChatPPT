@@ -32,8 +32,8 @@ templates_info = {
         "layout_mapping": {
             "Title Only": 0,
             "Title and Content": 1,
-            "Title and Picture": 2,
-            "Title, Content, and Picture": 3
+            "Title and Picture": 0,
+            "Title, Content, and Picture": 1
         }
     }
 

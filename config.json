@@ -1,6 +1,6 @@
 {
     "input_mode": "text",
-    "ppt_template": "templates/MasterTemplate.pptx",
+    "ppt_template": "templates/LGBTTemplate.pptx",
     "layout_mapping": {
         "Title Only": 0,
         "Title and Content": 1,
