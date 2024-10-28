@@ -6,6 +6,8 @@ import os
 import subprocess
 
 from logger import LOG
+os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+# os.environ["TRANSFORMERS_CACHE"] = "D:\\work\\jk_agent\\hf_cache"
 
 # 模型名称和参数配置
 MODEL_NAME = "openai/whisper-large-v3"  # Whisper 模型名称
@@ -156,6 +158,7 @@ if __name__ == "__main__":
     # 启动Gradio应用，允许队列功能，并通过 HTTPS 访问
     demo.queue().launch(
         share=False,
-        server_name="0.0.0.0",
+        server_name="127.0.0.1",
+        server_port=17860,
         # auth=("django", "1234") # ⚠️注意：记住修改密码
     )
