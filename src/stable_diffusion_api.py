@@ -186,7 +186,7 @@ if __name__ == '__main__':
     save_json_file(response.json(), output_path)
     """
 
-    keyword = "纳斯达克股票"
+    keyword = "古巴雪茄"
     # sd_prompt = generate_sd_prompt(keyword)
     # print(f"sd_prompt={sd_prompt}")
 

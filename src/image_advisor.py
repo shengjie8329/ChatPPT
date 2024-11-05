@@ -44,6 +44,7 @@ class ImageAdvisor(ABC):
         ])
 
         self.model = ChatOpenAI(
+            base_url="https://ai-yyds.com/v1",
             model="gpt-4o-mini",
             temperature=0.7,
             max_tokens=4096,
@@ -96,6 +97,7 @@ class ImageAdvisor(ABC):
                 if imgScore.score < 6:
                     # 调用stable diffusion的api，生成一张图片
                     # 目前url先固定，之后放到配置里
+                    LOG.warning(f"使用stable diffusion重新生成一张")
                     txt2img_url = "http://0or-zbqix1th49192k20c-cwsdao5e-custom.service.onethingrobot.com/sdapi/v1/txt2img"
                     path = generate_sd_image(img['slide_title'], txt2img_url, img["width"], img["height"])
                     img["obj"] = Image.open(path)

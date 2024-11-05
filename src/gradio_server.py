@@ -10,7 +10,7 @@ from content_assistant import ContentAssistant
 from image_advisor import ImageAdvisor
 from input_parser import parse_input_text
 from ppt_generator import generate_presentation
-from src.minicpm_v_model import chat_with_image
+from minicpm_v_model import chat_with_image
 from template_manager import load_template, get_layout_mapping
 from layout_manager import LayoutManager
 from logger import LOG
@@ -28,6 +28,7 @@ chatbot = ChatBot(config.chatbot_prompt)
 content_formatter = ContentFormatter(config.content_formatter_prompt)
 content_assistant = ContentAssistant(config.content_assistant_prompt)
 image_advisor = ImageAdvisor(config.image_advisor_prompt)
+
 
 # 加载 PowerPoint 模板，并获取可用布局
 ppt_template = load_template(config.ppt_template)
