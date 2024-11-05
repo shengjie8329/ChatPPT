@@ -11,6 +11,8 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
 from logger import LOG  # 导入日志工具
+from minicpm_v_model import image_to_base64, score_image
+from stable_diffusion_api import generate_sd_image
 
 class ImageAdvisor(ABC):
     """
@@ -82,9 +84,24 @@ class ImageAdvisor(ABC):
 
             # 仅处理分辨率最高的图像
             img = images[0]
+
             save_directory = f"images/{image_directory}"
             os.makedirs(save_directory, exist_ok=True)
             save_path = os.path.join(save_directory, f"{img['slide_title']}_1.jpeg")
+
+            try:
+                # 为图片打分，如果得分低于6分，则调用stable diffusion重新生成一张
+                imgScore = score_image(img["obj"], img['slide_title'])
+                LOG.warning(f"对图像进行打分: {imgScore.score}")
+                if imgScore.score < 6:
+                    # 调用stable diffusion的api，生成一张图片
+                    # 目前url先固定，之后放到配置里
+                    txt2img_url = "http://0or-zbqix1th49192k20c-cwsdao5e-custom.service.onethingrobot.com/sdapi/v1/txt2img"
+                    path = generate_sd_image(img['slide_title'], txt2img_url, img["width"], img["height"])
+                    img["obj"] = Image.open(path)
+            except Exception as e:
+                LOG.warning(f"调用 {e}")
+
             self.save_image(img["obj"], save_path)
             image_pair[img["slide_title"]] = save_path
 

@@ -107,7 +107,7 @@ def save_json_file(data: dict, output_path: str):
         json.dump(data, f, indent=4, ensure_ascii=False)
 
 
-def generate_image(txt2img_url: str, prompt: str, negative_prompt: str, image_name: str = "", ):
+def generate_image(txt2img_url: str, prompt: str, negative_prompt: str, image_name: str = "", width: int = 1024, height: int = 768):
     """
     Generate an image using the given prompt and negative prompt.
     :param prompt:  prompt
@@ -121,8 +121,8 @@ def generate_image(txt2img_url: str, prompt: str, negative_prompt: str, image_na
         'batch_size': 1,  # 批量大小
         # 'enable_hr': True,  # 是否开启高清
         # 'denoising_strength': 0.5,  # 去噪强度
-        'width': 1024,  # 第一阶段宽度
-        'height': 768,  # 第一阶段高度
+        'width': width,  # 宽度
+        'height': height,  # 高度
         # 'sampler_index': 'Euler a',  # 采样器
         "override_settings": {
             "sd_model_checkpoint": "realisticVisionV20_v20NoVAE.safetensors",
@@ -139,7 +139,7 @@ def generate_image(txt2img_url: str, prompt: str, negative_prompt: str, image_na
     return path
 
 
-def generate_sd_image(keyword: str, txt2img_url: str) ->str:
+def generate_sd_image(keyword: str, txt2img_url: str, width: int = 1024, height: int = 768 ) ->str:
     """
      Generate a sd image for the given keyword.
     :param keyword:  keyword
@@ -148,7 +148,7 @@ def generate_sd_image(keyword: str, txt2img_url: str) ->str:
     sd_llm_prompt = generate_sd_prompt(keyword)
     LOG.info(f"sd_prompt={sd_llm_prompt}")
     sd_negative_prompt = """(((nsfw))),EasyNegative,badhandv4,ng deepnegative v1 75t(worst quality:2),(low quality:2)(normal quality:2),lowres,((monochrome)),((grayscale)),bad anatomy,DeepNegative,skin spots,acnes,skinblemishes,(fat:1.2),facing away,looking awaytilted head,lowres,bad anatomy,bad hands,missingfingers,extra digit,fewer digits,bad feet,poorly drawn hands,poorly drawn face,mutation,deformed,extrafingers,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,crosseyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,missing arms,missing legs,extradigit,extra arms,extra leg,extra foot,teethcroppe,signature,watermark,username,blurry,cropped,jpegartifacts,text,errorLower body exposure,"""
-    img_path = generate_image(txt2img_url, sd_llm_prompt, sd_negative_prompt, keyword)
+    img_path = generate_image(txt2img_url, sd_llm_prompt, sd_negative_prompt, keyword, width, height)
     LOG.info(f"path={img_path}")
     return img_path
 
